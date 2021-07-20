@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # 安装软件
 #RUN apt-get -y update && apt-get -y install gcc gdb strace gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs patch e2fsprogs-devel krb5-devel libidn libidn-devel openldap-devel nss_ldap openldap-clients openldap-servers libevent-devel libevent uuid-devel uuid openssl openssl-devel pcre pcre-devel
-RUN apt-get -y install gcc*  make pcre-devel zlib-devel openssl openssl-devel libxslt-devel gd gd-devel GeoIP GeoIP-devel pcre pcre-devel
+RUN apt-get -y install gcc*
 RUN groupadd www
 RUN useradd -g www www -s /bin/false
 
