@@ -20,30 +20,4 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
-FROM php:7.2-fpm
 
-RUN { \
-        echo 'opcache.memory_consumption=128'; \
-        echo 'opcache.interned_strings_buffer=8'; \
-        echo 'opcache.max_accelerated_files=4000'; \
-        echo 'opcache.revalidate_freq=60'; \
-        echo 'opcache.fast_shutdown=1'; \
-    } > /usr/local/etc/php/conf.d/opcache-recommended.ini
-
-RUN mkdir -p /usr/src/ && mkdir -p /usr/src/yourls/
-RUN set -eux; \
-    curl -o yourls.tar.gz -fsSL "https://github.com/YOURLS/YOURLS/archive/refs/tags/1.8.1.tar.gz"; \
-# upstream tarballs include ./YOURLS-${YOURLS_VERSION}/ so this gives us /usr/src/YOURLS-${YOURLS_VERSION}
-    tar -xf yourls.tar.gz -C /usr/src/; \
-# move back to a common /usr/src/yourls
-    mv "/usr/src/YOURLS-1.8.1" /usr/src/yourls; \
-    rm yourls.tar.gz; \
-    chown -R www-data:www-data /usr/src/yourls
-
-RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
-COPY ./config-docker.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
-RUN chmod 755 -R /usr/local/bin/
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["php-fpm"]
