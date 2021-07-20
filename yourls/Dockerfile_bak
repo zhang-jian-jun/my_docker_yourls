@@ -1,12 +1,72 @@
 #FROM ubuntu:18.04
 FROM nginx:1.20.0
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=Builder /home/openeuler/web/docs/.vuepress/dist/ /usr/share/nginx/html/
+RUN chmod -R 755 /usr/share/nginx/html
+COPY ./deploy/nginx/nginx.conf /etc/nginx/nginx.conf
 
-ENV RUN_USER www-data
-ENV RUN_GROUP www-data
-EXPOSE 80
+ENV RUN_USER nginx
+ENV RUN_GROUP nginx
+EXPOSE 8080
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+
+FROM centos:centos7.6.1810
+# 安装软件
+RUN yum -y install epel-release && yum -y install vim net-tools bridge-utils firewalld bc iotop bc gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel zip unzip zlib-devel lrzsz tree ntpdate telnet lsof tcpdump wget libevent libevent-devel systemd-devel bash-completion traceroute psmisc
+
+RUN groupadd www
+RUN useradd -g www www -s /bin/false
+
+ENV VERSION 1.14.2
+
+# 下载并解压文件
+RUN mkdir -p /usr/local/src/
+ADD http://nginx.org/download/nginx-$VERSION.tar.gz /usr/local/src
+RUN tar -xvf /usr/local/src/nginx-$VERSION.tar.gz -C /usr/local/src/
+
+# 创建安装目录
+ENV NGINX_HOME /usr/local/nginx
+RUN mkdir -p $NGINX_HOME
+RUN chown -R www:www $NGINX_HOME
+
+# 进入解压目录
+WORKDIR /usr/local/src/nginx-$VERSION
+
+# 编译安装
+RUN ./configure \
+	--user=www \
+	--group=www \
+	--prefix=$NGINX_HOME \
+	--with-http_ssl_module \
+	--with-http_realip_module \
+	--with-http_gzip_static_module \
+	--with-http_stub_status_module
+RUN make
+RUN make install
+
+# 备份Nginx的配置文件
+COPY ./nginx.conf/conf/nginx.conf
+RUN mv $NGINX_HOME/conf/nginx.conf $NGINX_HOME/conf/nginx.conf.default
+
+# 设置环境变量
+ENV PATH $PATH:$NGINX_HOME/sbin
+
+# 创建WebApp目录
+#ENV WEB_APP /usr/share/nginx/html
+#RUN mkdir -p $WEB_APP
+
+# 设置默认工作目录
+#WORKDIR $WEB_APP
+
+# 暴露端口
+EXPOSE 80
+EXPOSE 443
+
+# 清理压缩包与解压文件
+RUN rm -rf /usr/local/src/nginx*
+
+CMD $NGINX_HOME/sbin/nginx -g 'daemon off;' -c $NGINX_HOME/conf/nginx.conf
 
 #RUN apt-get update && \
 #RUN yum install -y php7.4-cli php7.4-fpm php7.4-bcmath php7.4-gd php7.4-mbstring \
@@ -46,4 +106,4 @@ COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
 COPY ./config-docker.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["systemctl start php7.2-fpm"]
