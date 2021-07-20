@@ -28,9 +28,11 @@ RUN apt-get update && apt-get install -y vim &&  apt-get install -y nginx
 # 如上，以 && 符号连接命令，这样执行后，只会创建 1 层镜像。
 #指定运行该镜像的容器使用的端口为 80
 # docker run的时候 一定要加上 -P
+COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /usr/share/nginx/nginx.conf
 EXPOSE 80
-CMD ["nginx","-g","daemon off;"]
+CMD ["nginx","-g","daemon off"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["/usr/local/sbin/php-fpm"]
 
 
