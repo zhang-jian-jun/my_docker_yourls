@@ -1,8 +1,9 @@
 FROM ubuntu:18.04
+FROM mysql:5.7.25
 MAINTAINER zjj "wusen@126.com"
 
 # 使用yum的方式安装mysql；
-RUN apt-get install -y mysql-server mysql -y mysql-client
+ENV MYSQL_ALLOW_EMPTY_PASSWORD yes
 
 # 安装完成以后，执行以下命令。配置用户名密码相关信息；
 RUN /etc/init.d/mysqld start &&\
