@@ -91,6 +91,7 @@ RUN set -eux; \
 RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
+COPY ./config-docker.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["systemctl start php7.2-fpm"]
