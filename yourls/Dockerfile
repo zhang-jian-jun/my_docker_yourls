@@ -1,6 +1,5 @@
 #FROM ubuntu:18.04
 FROM centos:centos7.6.1810
-FROM php:7.2-fpm
 # 安装软件
 RUN yum -y install epel-release && yum -y install vim net-tools bridge-utils firewalld bc iotop bc gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel zip unzip zlib-devel lrzsz tree ntpdate telnet lsof tcpdump wget libevent libevent-devel systemd-devel bash-completion traceroute psmisc
 
@@ -69,6 +68,8 @@ CMD $NGINX_HOME/sbin/nginx -g 'daemon off;' -c $NGINX_HOME/conf/nginx.conf
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
+FROM php:7.2-fpm
+
 RUN { \
         echo 'opcache.memory_consumption=128'; \
         echo 'opcache.interned_strings_buffer=8'; \
@@ -89,4 +90,4 @@ RUN set -eux; \
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY config-docker.php /usr/src/yourls/user/
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["systemctl start php7.4-fpm"]
+CMD ["systemctl start php7.2-fpm"]
