@@ -25,11 +25,11 @@ WORKDIR /usr/local/src/nginx-$VERSION
 RUN ./configure \
 	--user=www \
 	--group=www \
-	--prefix=$NGINX_HOME \
-	--with-http_ssl_module \
-	--with-http_realip_module \
-	--with-http_gzip_static_module \
-	--with-http_stub_status_module
+	--prefix=$NGINX_HOME
+	#--with-http_ssl_module \
+	#--with-http_realip_module \
+	#--with-http_gzip_static_module \
+	#--with-http_stub_status_module
 RUN make
 RUN make install
 
