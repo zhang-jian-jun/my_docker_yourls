@@ -25,16 +25,16 @@ WORKDIR /usr/local/src/nginx-$VERSION
 RUN ./configure \
 	--user=www \
 	--group=www \
-	--prefix=$NGINX_HOME
-	#--with-http_ssl_module \
-	#--with-http_realip_module \
-	#--with-http_gzip_static_module \
-	#--with-http_stub_status_module
+	--prefix=$NGINX_HOME \
+	--with-http_ssl_module \
+	--with-http_realip_module \
+	--with-http_gzip_static_module \
+	--with-http_stub_status_module
 RUN make
 RUN make install
 
 # 备份Nginx的配置文件
-COPY /usr/local/nginx/conf/nginx.conf $NGINX_HOME/conf/nginx.conf
+COPY ./nginx.conf $NGINX_HOME/conf/nginx.conf
 RUN mv $NGINX_HOME/conf/nginx.conf $NGINX_HOME/conf/nginx.conf.default
 
 # 设置环境变量
