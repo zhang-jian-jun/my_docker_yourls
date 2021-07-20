@@ -33,7 +33,7 @@ define( 'YOURLS_DB_NAME', getenv_docker('YOURLS_DB_NAME', 'db_yourl') );
 
 /** MySQL hostname.
  ** If using a non standard port, specify it like 'hostname:port', eg. 'localhost:9999' or '127.0.0.1:666' */
-define( 'YOURLS_DB_HOST', getenv_docker('YOURLS_DB_HOST', '159.138.26.163') );
+define( 'YOURLS_DB_HOST', getenv_docker('YOURLS_DB_HOST', '192.168.0.179') );
 
 /** MySQL tables prefix */
 define( 'YOURLS_DB_PREFIX', getenv_docker('YOURLS_DB_PREFIX', 'yourls_') );
