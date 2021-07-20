@@ -1,5 +1,6 @@
 #FROM ubuntu:18.04
 FROM centos:centos7.6.1810
+FROM php7.4
 # 安装软件
 RUN yum -y install epel-release && yum -y install vim net-tools bridge-utils firewalld bc iotop bc gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel zip unzip zlib-devel lrzsz tree ntpdate telnet lsof tcpdump wget libevent libevent-devel systemd-devel bash-completion traceroute psmisc
 
@@ -59,7 +60,7 @@ CMD $NGINX_HOME/sbin/nginx -g 'daemon off;' -c $NGINX_HOME/conf/nginx.conf
 #RUN apt-get update && \
 #RUN yum install -y php7.4-cli php7.4-fpm php7.4-bcmath php7.4-gd php7.4-mbstring \
 # php7.4-mysql php7.4-opcache php7.4-xml php7.4-zip php7.4-json php7.4-imagick
-RUN yum -y install php72w php72w-cli php72w-fpm php72w-common php72w-devel php72w-embedded php72w-gd php72w-mbstring php72w-mysqlnd php72w-opcache php72w-pdo php72w-xml
+#RUN yum -y install php72w php72w-cli php72w-fpm php72w-common php72w-devel php72w-embedded php72w-gd php72w-mbstring php72w-mysqlnd php72w-opcache php72w-pdo php72w-xml
 
 #update-alternatives --set php /usr/bin/php7.4
 
@@ -88,4 +89,4 @@ RUN set -eux; \
 COPY docker-entrypoint.sh /usr/local/bin/
 COPY config-docker.php /usr/src/yourls/user/
 ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["systemctl start php7.2-fpm"]
+CMD ["systemctl start php7.4-fpm"]
