@@ -1,6 +1,6 @@
 #FROM ubuntu:18.04
 FROM centos:centos7.6.1810
-FROM php7.4
+FROM php:7.2-fpm
 # 安装软件
 RUN yum -y install epel-release && yum -y install vim net-tools bridge-utils firewalld bc iotop bc gcc gcc-c++ glibc glibc-devel pcre pcre-devel openssl openssl-devel zip unzip zlib-devel lrzsz tree ntpdate telnet lsof tcpdump wget libevent libevent-devel systemd-devel bash-completion traceroute psmisc
 
