@@ -87,7 +87,7 @@ RUN set -eux; \
     rm yourls.tar.gz; \
     chown -R www-data:www-data /usr/src/yourls
 
-COPY docker-entrypoint.sh /usr/local/bin/
-COPY config-docker.php /usr/src/yourls/user/
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY ./docker-entrypoint.sh /usr/local/bin/
+COPY ./config-docker.php /usr/src/yourls/user/
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["systemctl start php7.2-fpm"]
