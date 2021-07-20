@@ -1,8 +1,8 @@
-FROM ubuntu:18.04
-
+#FROM ubuntu:18.04
+FROM centos
 # 安装软件
-#RUN apt-get -y update && apt-get -y install gcc gdb strace gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs patch e2fsprogs-devel krb5-devel libidn libidn-devel openldap-devel nss_ldap openldap-clients openldap-servers libevent-devel libevent uuid-devel uuid openssl openssl-devel pcre pcre-devel
-RUN apt-get -y install gcc*
+RUN yum -y install gcc gdb strace gcc-c++ autoconf libjpeg libjpeg-devel libpng libpng-devel freetype freetype-devel libxml2 libxml2-devel zlib zlib-devel glibc glibc-devel glib2 glib2-devel bzip2 bzip2-devel ncurses ncurses-devel curl curl-devel e2fsprogs patch e2fsprogs-devel krb5-devel libidn libidn-devel openldap-devel nss_ldap openldap-clients openldap-servers libevent-devel libevent uuid-devel uuid openssl openssl-devel pcre pcre-devel
+#RUN apt-get -y install gcc* cc
 RUN groupadd www
 RUN useradd -g www www -s /bin/false
 
@@ -56,8 +56,8 @@ RUN rm -rf /usr/local/src/nginx*
 
 CMD $NGINX_HOME/sbin/nginx -g 'daemon off;' -c $NGINX_HOME/conf/nginx.conf
 
-RUN apt-get update && \
-apt-get install -y php7.4-cli php7.4-fpm php7.4-bcmath php7.4-gd php7.4-mbstring \
+#RUN apt-get update && \
+RUN yum install -y php7.4-cli php7.4-fpm php7.4-bcmath php7.4-gd php7.4-mbstring \
  php7.4-mysql php7.4-opcache php7.4-xml php7.4-zip php7.4-json php7.4-imagick
 
 #update-alternatives --set php /usr/bin/php7.4
