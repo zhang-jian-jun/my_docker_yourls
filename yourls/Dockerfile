@@ -89,7 +89,7 @@ RUN set -eux; \
     chown -R www-data:www-data /usr/src/yourls
 
 RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
-COPY ./docker-entrypoint.sh /usr/local/bin/
-COPY ./config-docker.php /usr/src/yourls/user/
+COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["systemctl start php7.2-fpm"]
