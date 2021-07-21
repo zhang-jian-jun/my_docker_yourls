@@ -42,7 +42,7 @@ RUN cd /usr/local/etc/php \
 && sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
 
 #CMD ["nginx","-g","daemon off;"]
-CMD ["nginx","-c","/usr/share/nginx/nginx.conf"]
+CMD ["nginx","-s","reload"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 #ENTRYPOINT ["/usr/local/sbin/php-fpm"]
 
