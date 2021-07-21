@@ -23,6 +23,7 @@ COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
 COPY ./config-docker.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
+RUN chmod 755 -R /usr/src/yourls/
 
 RUN apt-get update && apt-get install -y vim &&  apt-get install -y nginx
 # 如上，以 && 符号连接命令，这样执行后，只会创建 1 层镜像。
@@ -33,6 +34,6 @@ COPY ./nginx.conf /usr/share/nginx/nginx.conf
 EXPOSE 80
 CMD ["nginx","-g","daemon off"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["/usr/local/sbin/php-fpm"]
+ENTRYPOINT ["/usr/local/sbin/php-fpm"]
 
 

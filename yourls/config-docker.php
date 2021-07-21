@@ -33,7 +33,7 @@ define( 'YOURLS_DB_NAME', getenv_docker('YOURLS_DB_NAME', 'db_yourl') );
 
 /** MySQL hostname.
  ** If using a non standard port, specify it like 'hostname:port', eg. 'localhost:9999' or '127.0.0.1:666' */
-define( 'YOURLS_DB_HOST', getenv_docker('YOURLS_DB_HOST', '192.168.0.179') );
+define( 'YOURLS_DB_HOST', getenv_docker('YOURLS_DB_HOST', '192.168.0.179:3306') );
 
 /** MySQL tables prefix */
 define( 'YOURLS_DB_PREFIX', getenv_docker('YOURLS_DB_PREFIX', 'yourls_') );
@@ -44,7 +44,7 @@ define( 'YOURLS_DB_PREFIX', getenv_docker('YOURLS_DB_PREFIX', 'yourls_') );
 
 /** YOURLS installation URL -- all lowercase, no trailing slash at the end.
  ** If you define it to "http://sho.rt", don't use "http://www.sho.rt" in your browser (and vice-versa) */
-define( 'YOURLS_SITE', getenv_docker('YOURLS_SITE', 'http://159.138.26.163') );
+define( 'YOURLS_SITE', getenv_docker('YOURLS_SITE', 'http://159.138.26.163:8080') );
 
 /** Server timezone GMT offset */
 define( 'YOURLS_HOURS_OFFSET', filter_var(getenv('YOURLS_HOURS_OFFSET'), FILTER_VALIDATE_INT) ?: 0 );
