@@ -1,5 +1,5 @@
 #FROM php:7.2-fpm
-FROM php:8.0
+FROM php:8.0-fpm
 RUN set -eux; \
     docker-php-ext-install -j "$(nproc)" bcmath opcache pdo_mysql mysqli
 RUN { \
