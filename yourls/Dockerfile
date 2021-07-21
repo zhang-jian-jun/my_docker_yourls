@@ -34,16 +34,17 @@ EXPOSE 80
 EXPOSE 9000
 
 # confiugure
-RUN cd /usr/local/etc/php \
-&& cp php.ini-production php.ini \
-&& sed -i 's/display_errors\s*=.*/display_errors = Off/' php.ini \
-&& sed -i 's/error_reporting\s*=.*/error_reporting = E_ALL \& ~E_NOTICE \& ~E_STRICT \& ~E_DEPRECATED/' php.ini \
-&& sed -i 's/;error_log\s*=\s*php_errors\.log/error_log = \/var\/log\/php_errors.log/' php.ini \
-&& sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
+RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+#RUN cd /usr/local/etc/php \
+#&& cp php.ini-production php.ini \
+#&& sed -i 's/display_errors\s*=.*/display_errors = Off/' php.ini \
+#&& sed -i 's/error_reporting\s*=.*/error_reporting = E_ALL \& ~E_NOTICE \& ~E_STRICT \& ~E_DEPRECATED/' php.ini \
+#&& sed -i 's/;error_log\s*=\s*php_errors\.log/error_log = \/var\/log\/php_errors.log/' php.ini \
+#&& sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
 
 #CMD ["nginx","-g","daemon off;"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-ENTRYPOINT ["/usr/local/sbin/php-fpm"]
+ENTRYPOINT ["php-fpm"]
 CMD ["nginx","-s","reload"]
 
 
