@@ -32,8 +32,8 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx.conf /usr/share/nginx/nginx.conf
 EXPOSE 80
 EXPOSE 9000
-#CMD ["nginx","-g","daemon off;"]
-CMD ["nginx","-c","/usr/share/nginx/nginx.conf"]
+CMD ["nginx","-g","daemon off;"]
+#CMD ["nginx","-c","/usr/share/nginx/nginx.conf"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 ENTRYPOINT ["/usr/local/sbin/php-fpm"]
 
