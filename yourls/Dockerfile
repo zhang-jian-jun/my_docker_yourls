@@ -1,5 +1,6 @@
 #FROM php:7.2-fpm
 FROM php:8.0-fpm
+RUN apt-get install -y php8.0-mysql && apt-get install -y php8.0-gd
 RUN set -eux; \
     docker-php-ext-install -j "$(nproc)" bcmath opcache pdo_mysql mysqli
 RUN { \

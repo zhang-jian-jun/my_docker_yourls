@@ -38,7 +38,8 @@ define( 'YOURLS_DB_PREFIX', 'yourls_' );
  ** If you define it to "http://sho.rt", don't use "http://www.sho.rt" in your browser (and vice-versa)
  ** To use an IDN domain (eg http://héhé.com), write its ascii form here (eg http://xn--hh-bjab.com) */
 define( 'YOURLS_SITE', 'http://159.138.26.163:8080' );
-
+/** Server timezone GMT offset */
+define( 'YOURLS_HOURS_OFFSET', 8 );
 /** YOURLS language
  ** Change this setting to use a translation file for your language, instead of the default English.
  ** That translation file (a .mo file) must be installed in the user/language directory.
@@ -57,7 +58,7 @@ define( 'YOURLS_PRIVATE', true );
 
 /** A random secret hash used to encrypt cookies. You don't have to remember it, make it long and complicated
  ** Hint: copy from http://yourls.org/cookie */
-define( 'YOURLS_COOKIEKEY', 'modify this text with something random' );
+define( 'YOURLS_COOKIEKEY', '1qw12Sw1' );
 
 /** Username(s) and password(s) allowed to access the site. Passwords either in plain text or as encrypted hashes
  ** YOURLS will auto encrypt plain text passwords in this file
@@ -72,7 +73,7 @@ $yourls_user_passwords = [
  ** 36: generates all lowercase keywords (ie: 13jkm)
  ** 62: generates mixed case keywords (ie: 13jKm or 13JKm)
  ** For more information, see https://yourls.org/urlconvert */
-define( 'YOURLS_URL_CONVERT', 36 );
+define( 'YOURLS_URL_CONVERT', 62 );
 
 /** Debug mode to output some internal information
  ** Default is false for live site. Enable when coding or before submitting a new issue */
