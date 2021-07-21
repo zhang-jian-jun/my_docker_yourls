@@ -43,8 +43,8 @@ RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 #&& sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
 
 #CMD ["nginx","-g","daemon off;"]
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 ENTRYPOINT ["php-fpm"]
+#ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["nginx","-s","reload"]
 
 
