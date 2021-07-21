@@ -1,6 +1,6 @@
 #FROM php:7.2-fpm
 FROM php:8.0-fpm
-#RUN apt-get install -y php8.0-mysql && apt-get install -y php8.0-gd
+RUN apt-get install -y php-cli php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath
 RUN set -eux; \
     docker-php-ext-install -j "$(nproc)" bcmath opcache pdo_mysql mysqli
 RUN { \
@@ -19,13 +19,14 @@ RUN set -eux; \
 # move back to a common /usr/src/yourls
     mv "/usr/src/YOURLS-1.8.1" /usr/src/yourls; \
     rm yourls.tar.gz; \
-    chown -R www-data:www-data /usr/src/yourls
+    chown -R www-data:www-data /usr/src/yourls/YOURLS-1.8.1
 
 RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 COPY ./config.php /usr/src/yourls/user/config.php
 COPY ./config.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
+RUN chmod 755 -R /usr/src/yourls/YOURLS-1.8.1/
 
 # confiugure
 RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
