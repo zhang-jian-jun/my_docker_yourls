@@ -20,8 +20,8 @@ RUN set -eux; \
 
 RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-COPY ./config-docker.php /usr/src/yourls/user/config-docker.php
-COPY ./config-docker.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
+COPY ./config.php /usr/src/yourls/user/config.php
+COPY ./config.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
 
 RUN apt-get update && apt-get install -y vim &&  apt-get install -y nginx
@@ -43,8 +43,8 @@ RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 #&& sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
 
 #CMD ["nginx","-g","daemon off;"]
-ENTRYPOINT ["php-fpm"]
+#ENTRYPOINT ["php-fpm"]
 #ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-CMD ["nginx","-s","reload"]
+#CMD ["nginx","-s","reload"]
 
 
