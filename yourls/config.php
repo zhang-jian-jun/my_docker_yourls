@@ -37,7 +37,7 @@ define( 'YOURLS_DB_PREFIX', 'yourls_' );
  ** All lowercase, no trailing slash at the end.
  ** If you define it to "http://sho.rt", don't use "http://www.sho.rt" in your browser (and vice-versa)
  ** To use an IDN domain (eg http://héhé.com), write its ascii form here (eg http://xn--hh-bjab.com) */
-define( 'YOURLS_SITE', 'http://159.138.26.163:8080' );
+define( 'YOURLS_SITE', 'http://127.0.0.1' );
 /** Server timezone GMT offset */
 define( 'YOURLS_HOURS_OFFSET', 8 );
 /** YOURLS language
