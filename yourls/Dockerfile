@@ -1,5 +1,7 @@
-FROM php:7.2-fpm
-
+#FROM php:7.2-fpm
+FROM php:8.0
+RUN set -eux; \
+    docker-php-ext-install -j "$(nproc)" bcmath opcache pdo_mysql mysqli
 RUN { \
         echo 'opcache.memory_consumption=128'; \
         echo 'opcache.interned_strings_buffer=8'; \
@@ -33,7 +35,7 @@ RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 #&& sed -i 's/;error_log\s*=\s*php_errors\.log/error_log = \/var\/log\/php_errors.log/' php.ini \
 #&& sed -i 's/;date\.timezone\s*=.*/date.timezone = Asia\/Shanghai/' php.ini
 EXPOSE 9000
-ENTRYPOINT ["php-fpm"]
+#ENTRYPOINT ["php-fpm"]
 
 RUN apt-get update && apt-get install -y vim &&  apt-get install -y nginx
 # 如上，以 && 符号连接命令，这样执行后，只会创建 1 层镜像。
