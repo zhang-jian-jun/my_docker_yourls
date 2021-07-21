@@ -17,16 +17,16 @@ RUN set -eux; \
 # upstream tarballs include ./YOURLS-${YOURLS_VERSION}/ so this gives us /usr/src/YOURLS-${YOURLS_VERSION}
     tar -xf yourls.tar.gz -C /usr/src/; \
 # move back to a common /usr/src/yourls
-    mv "/usr/src/YOURLS-1.8.1" /usr/src/yourls; \
+    mv "/usr/src/YOURLS-1.8.1/" /usr/src/yourls; \
     rm yourls.tar.gz; \
-    chown -R www-data:www-data /usr/src/yourls/YOURLS-1.8.1
+    chown -R www-data:www-data /usr/src/yourls
 
 RUN mkdir -p /usr/local/bin/ && mkdir -p /usr/src/yourls/user/
 COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+#COPY ./config.php /usr/src/yourls/user/config.php
 COPY ./config.php /usr/src/yourls/user/config.php
-COPY ./config.php /usr/src/yourls/YOURLS-1.8.1/user/config.php
 RUN chmod 755 -R /usr/local/bin/
-RUN chmod 755 -R /usr/src/yourls/YOURLS-1.8.1/
+RUN chmod 777 -R /usr/src/yourls/
 
 # confiugure
 RUN cp -R /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
