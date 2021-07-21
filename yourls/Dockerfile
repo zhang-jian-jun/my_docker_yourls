@@ -35,6 +35,6 @@ EXPOSE 9000
 CMD ["nginx","-g","daemon off;"]
 #CMD ["nginx","-c","/usr/share/nginx/nginx.conf"]
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
-ENTRYPOINT ["/usr/local/sbin/php-fpm"]
+#ENTRYPOINT ["/usr/local/sbin/php-fpm"]
 
 
