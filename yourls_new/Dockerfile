@@ -41,7 +41,7 @@ RUN chmod 777 -R /opt/entrypoint.sh
 # mysql start
 RUN mkdir -p /data/ && mkdir /data/mysql
 VOLUME /data
-WORKDIR /data
+#WORKDIR /data
 RUN mkdir -p /run/mysqld/ && touch /run/mysqld/mysqld.sock
 
 RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
