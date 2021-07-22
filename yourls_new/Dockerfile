@@ -36,6 +36,7 @@ COPY etc/apache2/httpd.conf /etc/apache2/httpd.conf
 COPY etc/apache2/sites/ /etc/apache2/sites/
 COPY etc/php/php.ini /etc/php7/php.ini
 COPY scripts/entrypoint.sh /opt/entrypoint.sh
+RUN chmod 777 -R /opt/entrypoint.sh
 
 EXPOSE 80
 
