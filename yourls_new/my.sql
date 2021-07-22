@@ -1,0 +1,2 @@
+USE mysql;
+CREATE DATABASE IF NOT EXISTS db_yourl CHARACTER SET utf8 COLLATE utf8_general_ci;

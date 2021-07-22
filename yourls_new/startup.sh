@@ -1,5 +1,9 @@
 #!/bin/sh
 
+mkdir -p /run/mysqld/
+touch /run/mysqld/mysqld.sock
+chown -R mysql:mysql /run/mysqld
+mysql_install_db --user=mysql --ldata=/data/mysql > /dev/null
 # parameters
 MYSQL_ROOT_PWD=${MYSQL_ROOT_PWD:-"mysql"}
 MYSQL_USER=${MYSQL_USER:-"root"}
@@ -10,29 +14,29 @@ if [ ! -d "/run/mysqld" ]; then
 	mkdir -p /run/mysqld
 	chown -R mysql:mysql /run/mysqld
 fi
-if [ -d /data/mysql ]; then
-  echo "[i] MySQL directory already present, skipping creation"
-else
-  echo "[i] MySQL data directory not found, creating initial DBs"
-
-	chown -R mysql:mysql /data/mysql
-
-	# init database
-	echo 'Initializing database'
-	mysql_install_db --user=mysql --ldata=/data/mysql > /dev/null
-	echo 'Database initialized'
-
-	echo "[i] MySql root password: $MYSQL_ROOT_PWD"
-
-	# create temp file
-	tfile=`mktemp`
-	if [ ! -f "$tfile" ]; then
-	    return 1
-	fi
-
-	# save sql
-	echo "[i] Create temp file: $tfile"
-	cat << EOF > $tfile
+#if [ -d /data/mysql ]; then
+#  echo "[i] MySQL directory already present, skipping creation"
+#else
+#  echo "[i] MySQL data directory not found, creating initial DBs"
+#
+#	chown -R mysql:mysql /data/mysql
+#
+#	# init database
+#	echo 'Initializing database'
+#	mysql_install_db --user=mysql --ldata=/data/mysql > /dev/null
+#	echo 'Database initialized'
+#
+#	echo "[i] MySql root password: $MYSQL_ROOT_PWD"
+#
+#	# create temp file
+#	tfile=`mktemp`
+#	if [ ! -f "$tfile" ]; then
+#	    return 1
+#	fi
+#
+#	# save sql
+#	echo "[i] Create temp file: $tfile"
+#	cat << EOF > $tfile
 USE mysql;
 FLUSH PRIVILEGES;
 DELETE FROM mysql.user;
