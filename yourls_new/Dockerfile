@@ -39,42 +39,17 @@ COPY scripts/entrypoint.sh /opt/entrypoint.sh
 RUN chmod 777 -R /opt/entrypoint.sh
 
 # mysql start
-RUN apk add gcc gcc-c++ autoconf automake make wget \
-    bison ncurses-devel
-
-#创建临时目录
-# 通过wget下载或者通过ADD直接添加二选一的方式获得cmake和mysql包,在测试的使用使用ADD
-RUN mkdir -p /tmp/mysql && \
-    wget -P /tmp/mysql http://www.cmake.org/files/v2.8/cmake-2.8.5.tar.gz && \
-    wget -P /tmp/mysql http://downloads.mysql.com/archives/mysql-5.5/mysql-5.5.23.tar.gz
-#ADD Lib/mysql-5.5.23/cmake-2.8.5.tar.gz /tmp/mysql
-#ADD Lib/mysql-5.5.23/mysql-5.5.23.tar.gz /tmp/mysql
-
-# 解压cmake包并安装
-RUN cd /tmp/mysql && \
-    tar xzvf cmake-2.8.5.tar.gz && \
-    cd /tmp/mysql/cmake-2.8.5 && \
-    ./configure && \
-    make && \
-    make install
-
-#下载mysql包,解压之后进入到目录进行安装
-RUN cd /tmp/mysql && \
-    tar xzvf mysql-5.5.23.tar.gz && \
-    cd /tmp/mysql/mysql-5.5.23 && \
-        cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql \
-          -DMYSQL_DATADIR=/data/mysql/data \
-          -DWITH_MYISAM_STORAGE_ENGINE=1 \
-          -DWITH_INNOBASE_STORAGE_ENGINE=1 \
-          -DWITH_ARCHIVE_STORAGE_ENGINE=1 \
-          -DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
-          -DENABLED_LOCAL_INFILE=1 \
-          -DDEFAULT_CHARSET=utf8 \
-          -DDEFAULT_COLLATION=utf8_general_ci \
-          -DEXTRA_CHARSETS=all \
-          -DMYSQL_TCP_PORT=3306 && \
-    make && \
-    make install
+RUN apk update && \
+    apk add mysql mysql-client && \
+    rm -f /var/cache/apk/* && \
+    addgroup mysql mysql && \
+    mkdir run/mysqld && \
+    touch /var/run/mysqld/mysqld.sock && \
+    touch /var/run/mysqld/mysqld.pid && \
+    chown -R mysql:mysql /var/run/mysqld/mysqld.sock && \
+    chown -R mysql:mysql /var/run/mysqld/mysqld.pid && \
+    chmod -R 644 /var/run/mysqld/mysqld.sock && \
+    apk add openrc --no-cache
 
 #使用ADD直接把配置文件复制进去
 ADD mysql/my.cnf /etc/
@@ -87,7 +62,7 @@ RUN cd /usr/local/bin && \
     ln -s /usr/local/mysql/bin/mysqladmin  mysqladmin
 
 #清除操作
-RUN apk add clean all && rm -rf /tmp/yum* && rm -rf /tmp/mysql
+#RUN apk add clean all && rm -rf /tmp/yum* && rm -rf /tmp/mysql
 
 # 暴露目录，目前只暴露/data/mysql目录
 VOLUME ["/data/mysql"]
