@@ -35,8 +35,8 @@ COPY src/.htaccess /var/www/html/user/.htaccess
 COPY etc/apache2/httpd.conf /etc/apache2/httpd.conf
 COPY etc/apache2/sites/ /etc/apache2/sites/
 COPY etc/php/php.ini /etc/php7/php.ini
-COPY scripts/entrypoint.sh /opt/entrypoint.sh
-RUN chmod 777 -R /opt/entrypoint.sh
+COPY scripts/entrypoint.sh /var/www/html/entrypoint.sh
+RUN chmod 777 -R /var/www/html/entrypoint.sh
 
 # mysql start
 RUN mkdir -p /data/ && mkdir /data/mysql
@@ -45,14 +45,14 @@ VOLUME /data
 RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
 
 # These lines moved to the end allow us to rebuild image quickly after only these files were modified.
-COPY shex.sh /startup.sh
-RUN chmod 777 -R /startup.sh
+COPY shex.sh /var/www/html/startup.sh
+RUN chmod 777 -R /var/www/html/startup.sh
 COPY my.cnf /etc/mysql/my.cnf
-EXPOSE 3306
-ENTRYPOINT ["/startup.sh"]
+EXPOSE 3306 80
+#ENTRYPOINT ["/startup.sh"]
 # mysql end
 
-EXPOSE 80
+#EXPOSE 80
 
 WORKDIR /var/www/html/
-ENTRYPOINT [ "/opt/entrypoint.sh" ]
+ENTRYPOINT [ "/var/www/html/startup.sh", "/var/www/html/entrypoint.sh" ]
