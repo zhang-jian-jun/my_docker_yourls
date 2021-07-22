@@ -38,22 +38,6 @@ COPY etc/php/php.ini /etc/php7/php.ini
 COPY scripts/entrypoint.sh /opt/entrypoint.sh
 RUN chmod 777 -R /opt/entrypoint.sh
 
-# mysql start
-RUN mkdir -p /data/ && mkdir /data/mysql
-VOLUME /data
-WORKDIR /data
-
-RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
-
-# These lines moved to the end allow us to rebuild image quickly after only these files were modified.
-COPY mysql/startup.sh /startup.sh
-RUN chmod 777 -R /startup.sh
-COPY mysql/my.cnf /etc/mysql/my.cnf
-COPY mysql/my.cnf /etc/my.cnf.d/my.cnf
-EXPOSE 3306
-CMD ["/startup.sh"]
-# mysql end
-
 EXPOSE 80
 
 WORKDIR /var/www/html/
