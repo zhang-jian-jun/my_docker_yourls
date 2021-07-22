@@ -39,7 +39,7 @@ COPY scripts/entrypoint.sh /opt/entrypoint.sh
 RUN chmod 777 -R /opt/entrypoint.sh
 
 # mysql start
-RUN apk --update add gcc gcc-c++ autoconf automake make wget \
+RUN apk add gcc gcc-c++ autoconf automake make wget \
     bison ncurses-devel
 
 #创建临时目录
@@ -87,7 +87,7 @@ RUN cd /usr/local/bin && \
     ln -s /usr/local/mysql/bin/mysqladmin  mysqladmin
 
 #清除操作
-RUN apk --update add clean all && rm -rf /tmp/yum* && rm -rf /tmp/mysql
+RUN apk add clean all && rm -rf /tmp/yum* && rm -rf /tmp/mysql
 
 # 暴露目录，目前只暴露/data/mysql目录
 VOLUME ["/data/mysql"]
