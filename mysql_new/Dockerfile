@@ -5,7 +5,6 @@ RUN mkdir -p /data/ && mkdir /data/mysql
 VOLUME /data
 WORKDIR /data
 RUN mkdir -p /run/mysqld/ && touch /run/mysqld/mysqld.sock
-RUN chown -R mysql:mysql /run/mysqld
 
 RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
 
