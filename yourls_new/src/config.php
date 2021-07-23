@@ -54,7 +54,7 @@ define( 'YOURLS_UNIQUE_URLS', true );
 /** Private means the Admin area will be protected with login/pass as defined below.
  ** Set to false for public usage (eg on a restricted intranet or for test setups)
  ** Read http://yourls.org/privatepublic for more details if you're unsure */
-define( 'YOURLS_PRIVATE', true );
+define( 'YOURLS_PRIVATE', false );
 
 /** A random secret hash used to encrypt cookies. You don't have to remember it, make it long and complicated
  ** Hint: copy from http://yourls.org/cookie */
@@ -65,7 +65,7 @@ define( 'YOURLS_COOKIEKEY', '1qw12Sw1' );
  ** Read http://yourls.org/userpassword for more information */
 $yourls_user_passwords = [
 	'amdin' => '123456',
-	// 'username2' => 'password2',
+	'amdin1' => 'admin123456',
 	// You can have one or more 'login'=>'password' lines
 ];
 define('YOURLS_NO_HASH_PASSWORD',  false);
@@ -78,7 +78,7 @@ define( 'YOURLS_URL_CONVERT', 62 );
 
 /** Debug mode to output some internal information
  ** Default is false for live site. Enable when coding or before submitting a new issue */
-define( 'YOURLS_DEBUG', false );
+define( 'YOURLS_DEBUG', true );
 
 /**
 * Reserved keywords (so that generated URLs won't match them)
