@@ -46,13 +46,16 @@ RUN apk add --update mysql mysql-client && rm -f /var/cache/apk/*
 
 # These lines moved to the end allow us to rebuild image quickly after only these files were modified.
 COPY shex.sh /var/www/html/startup.sh
+COPY sql.sh /var/www/html/sql.sh
 RUN chmod 777 -R /var/www/html/startup.sh
+RUN chmod 777 -R /var/www/html/sql.sh
 COPY my.cnf /etc/mysql/my.cnf
 EXPOSE 3306 80
+cmd ["/var/www/html/startup.sh"]
 #ENTRYPOINT ["/startup.sh"]
 # mysql end
 
 #EXPOSE 80
 
 WORKDIR /var/www/html/
-ENTRYPOINT [ "/var/www/html/startup.sh", "/var/www/html/entrypoint.sh" ]
+ENTRYPOINT [ "/var/www/html/entrypoint.sh" ]

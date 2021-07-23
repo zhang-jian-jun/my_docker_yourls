@@ -68,6 +68,7 @@ $yourls_user_passwords = [
 	// 'username2' => 'password2',
 	// You can have one or more 'login'=>'password' lines
 ];
+define('YOURLS_NO_HASH_PASSWORD',  false);
 
 /** URL shortening method: either 36 or 62
  ** 36: generates all lowercase keywords (ie: 13jkm)
